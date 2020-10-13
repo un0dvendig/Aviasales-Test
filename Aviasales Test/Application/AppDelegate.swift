@@ -6,15 +6,21 @@
 //
 
 import UIKit
+import SwinjectAutoregistration
 
 // MARK: - UIResponder
 @main
 class AppDelegate: UIResponder {
     // MARK: Properties
+    let assembler: AppAssembler
     var window: UIWindow?
     
     // MARK: Initialization
     override init() {
+        let assembler = AppAssembler(
+            parent: nil
+        )
+        self.assembler = assembler
         super.init()
     }
     
@@ -23,10 +29,13 @@ class AppDelegate: UIResponder {
         let window = UIWindow(
             frame: UIScreen.main.bounds
         )
-        let listingViewController = ViewController()
-        let navigationController = UINavigationController(
-            rootViewController: listingViewController
+        
+        let placeKeyword: String = "париж"
+        let navigationController = self.assembler.resolver ~> (
+            ListingNavigationController.self,
+            argument: placeKeyword
         )
+        navigationController.isNavigationBarHidden = true
         window.rootViewController = navigationController
         self.window = window
         self.window?.makeKeyAndVisible()
