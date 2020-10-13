@@ -11,7 +11,7 @@ struct Place {
     let name: String
     let airportName: String?
     let searchesCount: Int
-    /// The Internation Air Transport Association
+    /// The IATA airport code, defined by the Internatoinal Air Transport Association
     let iata: String
     let location: Location
 }
