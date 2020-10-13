@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DD91862B2535FA83002AA189 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD91862A2535FA83002AA189 /* AppDelegate.swift */; };
-		DD91862D2535FA83002AA189 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD91862C2535FA83002AA189 /* SceneDelegate.swift */; };
 		DD91862F2535FA83002AA189 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD91862E2535FA83002AA189 /* ViewController.swift */; };
 		DD9186322535FA83002AA189 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD9186302535FA83002AA189 /* Main.storyboard */; };
 		DD9186342535FA85002AA189 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD9186332535FA85002AA189 /* Assets.xcassets */; };
@@ -18,7 +17,6 @@
 /* Begin PBXFileReference section */
 		DD9186272535FA83002AA189 /* Aviasales Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aviasales Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD91862A2535FA83002AA189 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DD91862C2535FA83002AA189 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DD91862E2535FA83002AA189 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DD9186312535FA83002AA189 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DD9186332535FA85002AA189 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,15 +54,62 @@
 		DD9186292535FA83002AA189 /* Aviasales Test */ = {
 			isa = PBXGroup;
 			children = (
-				DD91862A2535FA83002AA189 /* AppDelegate.swift */,
-				DD91862C2535FA83002AA189 /* SceneDelegate.swift */,
+				DD9186422535FB84002AA189 /* Application */,
+				DD9186442535FB93002AA189 /* Modules */,
+				DD9186432535FB8B002AA189 /* Nework */,
+				DD9186452535FB9B002AA189 /* Packages */,
+				DD9186462535FBA5002AA189 /* Resources */,
+				DD9186472535FBAE002AA189 /* Supporting */,
 				DD91862E2535FA83002AA189 /* ViewController.swift */,
 				DD9186302535FA83002AA189 /* Main.storyboard */,
+			);
+			path = "Aviasales Test";
+			sourceTree = "<group>";
+		};
+		DD9186422535FB84002AA189 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				DD91862A2535FA83002AA189 /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		DD9186432535FB8B002AA189 /* Nework */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Nework;
+			sourceTree = "<group>";
+		};
+		DD9186442535FB93002AA189 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		DD9186452535FB9B002AA189 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		DD9186462535FBA5002AA189 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				DD9186332535FA85002AA189 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DD9186472535FBAE002AA189 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
 				DD9186352535FA85002AA189 /* LaunchScreen.storyboard */,
 				DD9186382535FA85002AA189 /* Info.plist */,
 			);
-			path = "Aviasales Test";
+			path = Supporting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +184,6 @@
 			files = (
 				DD91862F2535FA83002AA189 /* ViewController.swift in Sources */,
 				DD91862B2535FA83002AA189 /* AppDelegate.swift in Sources */,
-				DD91862D2535FA83002AA189 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +260,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -271,7 +315,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -288,7 +332,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QZTJ8W8QRE;
-				INFOPLIST_FILE = "Aviasales Test/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Aviasales Test/Supporting/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,7 +341,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "un0dvend1g.Aviasales-Test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -307,7 +352,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QZTJ8W8QRE;
-				INFOPLIST_FILE = "Aviasales Test/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Aviasales Test/Supporting/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,7 +361,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "un0dvend1g.Aviasales-Test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
