@@ -14,6 +14,9 @@
 		DD8368D4253AE52900B38A6F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368D3253AE52900B38A6F /* MapViewController.swift */; };
 		DD8368D7253AE52F00B38A6F /* MapModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368D6253AE52F00B38A6F /* MapModelController.swift */; };
 		DD8368DA253AEA0C00B38A6F /* MapRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368D9253AEA0C00B38A6F /* MapRouter.swift */; };
+		DD8368E0253AF19C00B38A6F /* IATAAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368DF253AF19C00B38A6F /* IATAAnnotation.swift */; };
+		DD8368E3253AF31000B38A6F /* IATAAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368E2253AF31000B38A6F /* IATAAnnotationView.swift */; };
+		DD8368E8253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368E7253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift */; };
 		DD91862B2535FA83002AA189 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD91862A2535FA83002AA189 /* AppDelegate.swift */; };
 		DD9186342535FA85002AA189 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD9186332535FA85002AA189 /* Assets.xcassets */; };
 		DD9186372535FA85002AA189 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD9186352535FA85002AA189 /* LaunchScreen.storyboard */; };
@@ -60,6 +63,9 @@
 		DD8368D3253AE52900B38A6F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		DD8368D6253AE52F00B38A6F /* MapModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModelController.swift; sourceTree = "<group>"; };
 		DD8368D9253AEA0C00B38A6F /* MapRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRouter.swift; sourceTree = "<group>"; };
+		DD8368DF253AF19C00B38A6F /* IATAAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IATAAnnotation.swift; sourceTree = "<group>"; };
+		DD8368E2253AF31000B38A6F /* IATAAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IATAAnnotationView.swift; sourceTree = "<group>"; };
+		DD8368E7253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Location.swift"; sourceTree = "<group>"; };
 		DD9186272535FA83002AA189 /* Aviasales Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aviasales Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD91862A2535FA83002AA189 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD9186332535FA85002AA189 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,12 +130,30 @@
 		DD8368C7253AE2D700B38A6F /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				DD8368DD253AF17300B38A6F /* Annotations */,
 				DD8368D0253AE52200B38A6F /* MapAssembler.swift */,
 				DD8368D6253AE52F00B38A6F /* MapModelController.swift */,
 				DD8368D9253AEA0C00B38A6F /* MapRouter.swift */,
 				DD8368D3253AE52900B38A6F /* MapViewController.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		DD8368DD253AF17300B38A6F /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				DD8368DE253AF18800B38A6F /* IATAAnnotation */,
+			);
+			path = Annotations;
+			sourceTree = "<group>";
+		};
+		DD8368DE253AF18800B38A6F /* IATAAnnotation */ = {
+			isa = PBXGroup;
+			children = (
+				DD8368DF253AF19C00B38A6F /* IATAAnnotation.swift */,
+				DD8368E2253AF31000B38A6F /* IATAAnnotationView.swift */,
+			);
+			path = IATAAnnotation;
 			sourceTree = "<group>";
 		};
 		DD91861E2535FA83002AA189 = {
@@ -328,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				DD9186B325361CB5002AA189 /* UITableView++.swift */,
+				DD8368E7253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -472,6 +497,7 @@
 				DD918683253611B7002AA189 /* AppAssembler.swift in Sources */,
 				DD91867C2536116B002AA189 /* ScrollViewEvents.swift in Sources */,
 				DD9186622536111A002AA189 /* ListingModelController.swift in Sources */,
+				DD8368E8253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift in Sources */,
 				DD91868C25361260002AA189 /* VoidResult.swift in Sources */,
 				DD8368DA253AEA0C00B38A6F /* MapRouter.swift in Sources */,
 				DD91867D2536116B002AA189 /* TableViewCellHeightProvider.swift in Sources */,
@@ -486,12 +512,14 @@
 				DD9186AF25361C76002AA189 /* AppFont.swift in Sources */,
 				DD8368D1253AE52200B38A6F /* MapAssembler.swift in Sources */,
 				DD9186652536111A002AA189 /* ListingCellHeightProvider.swift in Sources */,
+				DD8368E3253AF31000B38A6F /* IATAAnnotationView.swift in Sources */,
 				DD91867E2536116B002AA189 /* TableViewUpdater.swift in Sources */,
 				DD91862B2535FA83002AA189 /* AppDelegate.swift in Sources */,
 				DD91869A25361687002AA189 /* Place.swift in Sources */,
 				DD9186632536111A002AA189 /* ListingViewController.swift in Sources */,
 				DD91868F25361260002AA189 /* ListingAPI.swift in Sources */,
 				DD8368D4253AE52900B38A6F /* MapViewController.swift in Sources */,
+				DD8368E0253AF19C00B38A6F /* IATAAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

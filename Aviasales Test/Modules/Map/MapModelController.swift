@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import protocol MapKit.MKAnnotation
+import MapKit
 
 // MARK: - Delegate
 protocol MapModelControllerDelegate: AnyObject {
@@ -30,24 +30,31 @@ final class MapModelController {
     weak var delegate: MapModelControllerDelegate?
     
     // MARK: Private properties
-    private let initialLocation: Location
-    private let finishLocation: Location
+    private let initialPlace: Place
+    private let finishPlace: Place
     
     // MARK: Initialization
     init(
-        initialLocation: Location?,
-        finishLocation: Location
+        initialPlace: Place?,
+        finishPlace: Place
     ) {
-        if let initialLocation = initialLocation {
-            self.initialLocation = initialLocation
+        if let initialPlace = initialPlace {
+            self.initialPlace = initialPlace
         } else {
             let saintPetersburgLocation: Location = .init(
                 longitude: 59.8029,
                 latitude: 30.2678
             )
-            self.initialLocation = saintPetersburgLocation
+            let saintPetersburgPlace: Place = .init(
+                name: "Saint-Petersburg",
+                airportName: "Pulkovo",
+                searchesCount: 0,
+                iata: "LED",
+                location: saintPetersburgLocation
+            )
+            self.initialPlace = saintPetersburgPlace
         }
-        self.finishLocation = finishLocation
+        self.finishPlace = finishPlace
     }
         
     // MARK: - Methods
@@ -56,8 +63,42 @@ final class MapModelController {
             self.delegate?.pageLoading()
         }
         
-        // TODO: ...
+        var annotations: [MKAnnotation] = []
+        let startAnnotation = self.makeIATAAnnotation(
+            usingPlace: self.initialPlace
+        )
+        annotations.append(
+            startAnnotation
+        )
+        let finishAnnotation = self.makeIATAAnnotation(
+            usingPlace: self.finishPlace
+        )
+        annotations.append(
+            finishAnnotation
+        )
+        
+        DispatchQueue.main.async {
+            self.delegate?.mainPageLoaded(
+                with: .success(annotations)
+            )
+        }
     }
-    
-    // MARK: Private methods
+}
+
+// MARK: - MKAnnotation factory
+extension MapModelController {
+    private func makeIATAAnnotation(
+        usingPlace place: Place
+    ) -> MKAnnotation {
+        let coordinate: CLLocationCoordinate2D = .init(
+            place.location
+        )
+        let iata = place.iata
+        
+        let iataAnnotation: IATAAnnotation = .init(
+            coordinate: coordinate,
+            iata: iata
+        )
+        return iataAnnotation
+    }
 }

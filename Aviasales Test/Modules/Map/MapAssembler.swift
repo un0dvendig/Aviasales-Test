@@ -41,14 +41,14 @@ struct MapAssembly: Assembly {
             MapViewController.self
         ) { (
             resolver,
-            initialLocation: Location?,
-            finishLocation: Location
+            initialPlace: Place?,
+            finishPlace: Place
         ) -> MapViewController in
             let modelController = resolver ~> (
                 MapModelController.self,
                 arguments: (
-                    initialLocation,
-                    finishLocation
+                    initialPlace,
+                    finishPlace
                 )
             )
             let viewController = MapViewController(
@@ -66,12 +66,12 @@ struct MapAssembly: Assembly {
             MapModelController.self
         ) { (
             resolver,
-            initialLocation: Location?,
-            finishLocation: Location
+            initialPlace: Place?,
+            finishPlace: Place
         ) -> MapModelController in
             let modelController = MapModelController(
-                initialLocation: initialLocation,
-                finishLocation: finishLocation
+                initialPlace: initialPlace,
+                finishPlace: finishPlace
             )
             return modelController
         }

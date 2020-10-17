@@ -95,13 +95,12 @@ extension ListingViewController: ListingModelControllerDelegate {
     func openMap(
         usingPlace place: Place
     ) {
-        // TODO: Add me
-        let initialLocation: Location? = nil
-        let finishLocation: Location = place.location
+        let initialPlace: Place? = nil
+        let finishPlace: Place = place
         self.router.navigate(
             to: .map(
-                initialLocation: initialLocation,
-                finishLocation: finishLocation
+                initialPlace: initialPlace,
+                finishPlace: finishPlace
             )
         )
     }

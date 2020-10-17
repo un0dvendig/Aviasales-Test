@@ -11,8 +11,8 @@ import SwinjectAutoregistration
 final class ListingRouter: Router {
     enum Destination {
         case map(
-            initialLocation: Location?,
-            finishLocation: Location
+            initialPlace: Place?,
+            finishPlace: Place
         )
     }
 
@@ -34,14 +34,14 @@ final class ListingRouter: Router {
     ) {
         switch destination {
         case .map(
-            let initialLocation,
-            let finishLocation
+            let initialPlace,
+            let finishPlace
         ):
             let vc = self.mapAssembler.resolver ~> (
                 MapViewController.self,
                 arguments: (
-                    initialLocation,
-                    finishLocation
+                    initialPlace,
+                    finishPlace
                 )
             )
             vc.modalPresentationStyle = .fullScreen
