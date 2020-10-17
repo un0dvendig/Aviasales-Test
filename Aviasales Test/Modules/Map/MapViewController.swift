@@ -16,6 +16,16 @@ final class MapViewController: UIViewController {
     var router: MapRouter!
     
     // MARK: Private properties
+    private enum Layout {
+        static let backButtonHeight: CGFloat = 40
+        static let backButtonInsets: UIEdgeInsets = .init(
+            top: 15,
+            left: 15,
+            bottom: 0,
+            right: 0
+        )
+    }
+    
     private let modelController: MapModelController
     
     // Flight properties
@@ -27,6 +37,7 @@ final class MapViewController: UIViewController {
     
     // MARK: Subview
     private let mapView: MKMapView
+    private let backButton: UIButton
     
     // MARK: Initialization
     init(
@@ -35,6 +46,7 @@ final class MapViewController: UIViewController {
         self.modelController = modelController
         
         self.mapView = Self.makeMapView()
+        self.backButton = Self.makeBackButton()
         
         super.init(
             nibName: nil,
@@ -46,6 +58,7 @@ final class MapViewController: UIViewController {
         
         self.modelController.delegate = self
         self.setupMapView()
+        self.setupBackButton()
     }
     
     @available(*, unavailable)
@@ -60,6 +73,12 @@ final class MapViewController: UIViewController {
     // MARK: View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Forcing UIViewController to use .light style.
+        if #available(iOS 13.0, *) {
+            self.overrideUserInterfaceStyle = .light
+        }
+        
         self.modelController.loadPage()
     }
     
@@ -72,25 +91,16 @@ final class MapViewController: UIViewController {
             usingSafeArea: false
         )
         
-        // TODO: Delete me
-        let closeButton = UIButton()
-        closeButton.height(40)
-        closeButton.aspectRatio(1.0)
-        closeButton.backgroundColor = .red
-        closeButton.addTarget(
-            self,
-            action: #selector(self.didTapCloseButton(_:)),
-            for: .touchUpInside
-        )
         self.view.addSubview(
-            closeButton
+            self.backButton
         )
-        closeButton.topToSuperview(
-            offset: 15,
+        self.backButton.edgesToSuperview(
+            excluding: [
+                .bottom,
+                .right
+            ],
+            insets: Layout.backButtonInsets,
             usingSafeArea: true
-        )
-        closeButton.leadingToSuperview(
-            offset: 15
         )
     }
     
@@ -101,6 +111,14 @@ final class MapViewController: UIViewController {
         )
         
         self.mapView.delegate = self
+    }
+    
+    private func setupBackButton() {
+        self.backButton.addTarget(
+            self,
+            action: #selector(self.backButtonTapped(_:)),
+            for: .touchUpInside
+        )
     }
     
     @objc
@@ -144,7 +162,7 @@ final class MapViewController: UIViewController {
     
     // MARK: Actions
     @objc
-    private func didTapCloseButton(
+    private func backButtonTapped(
         _ button: UIButton
     ) {
         self.router.navigate(
@@ -174,6 +192,12 @@ extension MapViewController: MapModelControllerDelegate {
             }
             self.mapView.addAnnotations(
                 annotations
+            )
+            
+            // Setting proper camera position
+            self.mapView.showAnnotations(
+                annotations,
+                animated: true
             )
             
             // Adding polyline
@@ -260,8 +284,9 @@ extension MapViewController: MKMapViewDelegate {
             polyline: polyline
         )
         renderer.lineWidth = 5.0
-        renderer.alpha = 0.5
-        renderer.strokeColor = .blue
+        renderer.alpha = 1.0
+        renderer.strokeColor = AppColor.annotationBorder.value
+        renderer.lineDashPattern = [0, 10]
         
         return renderer
     }
@@ -277,5 +302,29 @@ extension MapViewController {
         mapView.showsUserLocation = false
         mapView.showsTraffic = false
         return mapView
+    }
+    
+    private static func makeBackButton() -> UIButton {
+        let button = UIButton(
+            type: .system
+        )
+        
+        let backButtonImage = UIImage(
+            named: "arrow_left"
+        )
+        button.setImage(
+            backButtonImage,
+            for: .normal
+        )
+        
+        button.backgroundColor = AppColor.background.value
+        button.clipsToBounds = true
+        button.layer.cornerRadius = Layout.backButtonHeight / 2
+        button.aspectRatio(1.0)
+        button.height(
+            Layout.backButtonHeight
+        )
+        
+        return button
     }
 }

@@ -114,7 +114,7 @@ extension ListingViewController {
             style: .plain
         )
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .lightGray
+        tableView.backgroundColor = AppColor.tableViewBackground.value
         tableView.isMultipleTouchEnabled = false
         return tableView
     }

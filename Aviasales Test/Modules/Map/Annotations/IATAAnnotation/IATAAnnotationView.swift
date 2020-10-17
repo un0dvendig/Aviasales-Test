@@ -6,6 +6,7 @@
 //
 
 import MapKit.MKAnnotationView
+import SwiftRichString
 
 // MARK: - AITAAnnotationView
 final class IATAAnnotationView: MKAnnotationView {
@@ -17,13 +18,14 @@ final class IATAAnnotationView: MKAnnotationView {
             guard let iataAnnotation = newValue as? IATAAnnotation else {
                 return
             }
-            self.titleLabel.text = iataAnnotation.iata
+            self.titleLabel.styledText = iataAnnotation.iata
         }
     }
     
     // MARK: Private properties
     private enum Layout {
-        static let annotationViewHeight: CGFloat = 60
+        static let annotationBorderWidth: CGFloat = 3
+        static let annotationViewHeight: CGFloat = 50
         static let annotationViewWidth: CGFloat = 100
         
         static let titleLabelInsets: UIEdgeInsets = .init(
@@ -34,13 +36,20 @@ final class IATAAnnotationView: MKAnnotationView {
         )
     }
     
+    private enum Style {
+        static let titleLabelStyle: SwiftRichString.Style = .init {
+            $0.font = AppFont.medium20
+            $0.color = AppColor.annotationBorder.value
+        }
+    }
+    
     // MARK: Subviews
     private let titleLabel: UILabel
     
     // MARK: MKAnnotationView methods
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.titleLabel.text = nil
+        self.titleLabel.styledText = nil
     }
     
     // MARK: Initialization
@@ -81,11 +90,11 @@ final class IATAAnnotationView: MKAnnotationView {
         
         self.alpha = 0.8
         
-        self.backgroundColor = .white
+        self.backgroundColor = AppColor.background.value
         self.clipsToBounds = true
         self.layer.cornerRadius = Layout.annotationViewHeight / 2
-        self.layer.borderColor = UIColor.blue.cgColor
-        self.layer.borderWidth = 2
+        self.layer.borderColor = AppColor.annotationBorder.value.cgColor
+        self.layer.borderWidth = Layout.annotationBorderWidth
     }
     
     private func setupSubview() {
@@ -105,7 +114,7 @@ private extension IATAAnnotationView {
         label.textAlignment = .center
         label.numberOfLines = 1
         label.backgroundColor = .clear
-        label.textColor = .blue
+        label.style = Style.titleLabelStyle
         return label
     }
 }

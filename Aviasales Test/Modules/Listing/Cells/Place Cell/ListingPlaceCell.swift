@@ -37,15 +37,15 @@ final class ListingPlaceCell: UITableViewCell {
     private enum Style {
         static let placeNameLabelStyle: SwiftRichString.Style = .init {
             $0.font = AppFont.bold20
-            $0.color = UIColor.purple
+            $0.color = AppColor.titleText.value
         }
         static let airportNameLabelStyle: SwiftRichString.Style = .init {
             $0.font = AppFont.medium15
-            $0.color = UIColor.black
+            $0.color = AppColor.text.value
         }
         static let searchesCountLabelStyle: SwiftRichString.Style = .init {
             $0.font = AppFont.regular15
-            $0.color = UIColor.black
+            $0.color = AppColor.text.value
         }
     }
     
@@ -188,7 +188,7 @@ extension ListingPlaceCell: TableViewCellSelfHeightProvider {
 extension ListingPlaceCell {
     private static func makeContentContainerBackgroundView() -> UIView {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = AppColor.background.value
         view.clipsToBounds = true
         view.layer.cornerRadius = Layout.cellCornerRadius
         return view
