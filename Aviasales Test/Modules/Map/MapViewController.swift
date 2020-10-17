@@ -18,6 +18,13 @@ final class MapViewController: UIViewController {
     // MARK: Private properties
     private let modelController: MapModelController
     
+    // Flight properties
+    private var flightPolyline: MKPolyline?
+    private var planeAnnotation: MKPointAnnotation?
+    private var planeAnnotationView: MKAnnotationView?
+    private var planeDirection: CLLocationDirection = .init()
+    private var planeAnnotationPosition: Int = 0
+    
     // MARK: Subview
     private let mapView: MKMapView
     
@@ -96,6 +103,45 @@ final class MapViewController: UIViewController {
         self.mapView.delegate = self
     }
     
+    @objc
+    private func updatePlanePositionAndDirection() {
+        guard let flightPolyline = self.flightPolyline,
+              self.planeAnnotation != nil else {
+            return
+        }
+        
+        let positionStep: Int = 5
+        
+        guard self.planeAnnotationPosition + positionStep < flightPolyline.pointCount else {
+            return
+        }
+        
+        let flightPoints = flightPolyline.points()
+        
+        let previousMapPoint = flightPoints[self.planeAnnotationPosition]
+        self.planeAnnotationPosition += positionStep
+        let nextMapPoint = flightPoints[self.planeAnnotationPosition]
+        
+        let bearing = MapCommon.getBearingBetweenTwoPoints(
+            point1: previousMapPoint,
+            point2: nextMapPoint
+        )
+        
+        UIView.animate(
+            withDuration: 0.025
+        ) {
+            self.planeAnnotation?.coordinate = nextMapPoint.coordinate
+            self.planeAnnotationView?.transform = self.mapView.transform.rotated(
+                by: CGFloat(bearing))
+        }
+        
+        perform(
+            #selector(self.updatePlanePositionAndDirection),
+            with: nil,
+            afterDelay: 0.03
+        )
+    }
+    
     // MARK: Actions
     @objc
     private func didTapCloseButton(
@@ -120,6 +166,7 @@ extension MapViewController: MapModelControllerDelegate {
         SVProgressHUD.dismiss()
         switch result {
         case .success(let annotations):
+            // Adding annotaions
             if !self.mapView.annotations.isEmpty {
                 self.mapView.removeAnnotations(
                     self.mapView.annotations
@@ -128,6 +175,26 @@ extension MapViewController: MapModelControllerDelegate {
             self.mapView.addAnnotations(
                 annotations
             )
+            
+            // Adding polyline
+            let coordinates = annotations.map { $0.coordinate }
+            let flightPolyline = MapCommon.createPolyline(
+                usingCoordinates: coordinates
+            )
+            self.flightPolyline = flightPolyline
+            self.mapView.addOverlay(
+                flightPolyline
+            )
+            
+            // Adding plane
+            let planeAnnotation = MKPointAnnotation()
+            self.planeAnnotation = planeAnnotation
+            self.mapView.addAnnotation(
+                planeAnnotation
+            )
+            
+            // Start updating plane's position
+            self.updatePlanePositionAndDirection()
         case .failure(let error):
             print("Got and error! \(error)")
         }
@@ -148,15 +215,55 @@ extension MapViewController: MKMapViewDelegate {
         
         var annotationView: MKAnnotationView?
         
-        if let aitaAnnotation = annotation as? IATAAnnotation {
-            let aitaAnnotationView = mapView.dequeueReusableAnnotationView(
+        if let iataAnnotation = annotation as? IATAAnnotation {
+            let iataAnnotationView = mapView.dequeueReusableAnnotationView(
                 withIdentifier: IATAAnnotationView.reuseIdentifier,
-                for: aitaAnnotation
+                for: iataAnnotation
             )
-            annotationView = aitaAnnotationView
+            annotationView = iataAnnotationView
+        } else if let mkPointAnnotation = annotation as? MKPointAnnotation {
+            let planeAnnotationIdentifier = "PlaneAnnotation"
+            let planeMKAnnotationView: MKAnnotationView
+
+            if let planeAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: planeAnnotationIdentifier) {
+                planeMKAnnotationView = planeAnnotationView
+            } else {
+                planeMKAnnotationView = MKAnnotationView(
+                    annotation: mkPointAnnotation,
+                    reuseIdentifier: planeAnnotationIdentifier
+                )
+            }
+            let planeImage = UIImage(
+                named: "map_plane"
+            )?.rotated(
+                by: -.pi/2
+            )
+            planeMKAnnotationView.image = planeImage
+            
+            self.planeAnnotationView = planeMKAnnotationView
+            
+            annotationView = planeMKAnnotationView
         }
         
         return annotationView
+    }
+    
+    func mapView(
+        _ mapView: MKMapView,
+        rendererFor overlay: MKOverlay
+    ) -> MKOverlayRenderer {
+        guard let polyline = overlay as? MKPolyline else {
+            return MKOverlayRenderer()
+        }
+        
+        let renderer = MKPolylineRenderer(
+            polyline: polyline
+        )
+        renderer.lineWidth = 5.0
+        renderer.alpha = 0.5
+        renderer.strokeColor = .blue
+        
+        return renderer
     }
 }
 

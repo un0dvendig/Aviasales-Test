@@ -17,6 +17,8 @@
 		DD8368E0253AF19C00B38A6F /* IATAAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368DF253AF19C00B38A6F /* IATAAnnotation.swift */; };
 		DD8368E3253AF31000B38A6F /* IATAAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368E2253AF31000B38A6F /* IATAAnnotationView.swift */; };
 		DD8368E8253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368E7253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift */; };
+		DD8368EB253AFE9900B38A6F /* MapCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368EA253AFE9900B38A6F /* MapCommon.swift */; };
+		DD836904253B2C7C00B38A6F /* UIImage+Rotated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD836903253B2C7C00B38A6F /* UIImage+Rotated.swift */; };
 		DD91862B2535FA83002AA189 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD91862A2535FA83002AA189 /* AppDelegate.swift */; };
 		DD9186342535FA85002AA189 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD9186332535FA85002AA189 /* Assets.xcassets */; };
 		DD9186372535FA85002AA189 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD9186352535FA85002AA189 /* LaunchScreen.storyboard */; };
@@ -66,6 +68,8 @@
 		DD8368DF253AF19C00B38A6F /* IATAAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IATAAnnotation.swift; sourceTree = "<group>"; };
 		DD8368E2253AF31000B38A6F /* IATAAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IATAAnnotationView.swift; sourceTree = "<group>"; };
 		DD8368E7253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Location.swift"; sourceTree = "<group>"; };
+		DD8368EA253AFE9900B38A6F /* MapCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCommon.swift; sourceTree = "<group>"; };
+		DD836903253B2C7C00B38A6F /* UIImage+Rotated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Rotated.swift"; sourceTree = "<group>"; };
 		DD9186272535FA83002AA189 /* Aviasales Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aviasales Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD91862A2535FA83002AA189 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD9186332535FA85002AA189 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 			children = (
 				DD8368DD253AF17300B38A6F /* Annotations */,
 				DD8368D0253AE52200B38A6F /* MapAssembler.swift */,
+				DD8368EA253AFE9900B38A6F /* MapCommon.swift */,
 				DD8368D6253AE52F00B38A6F /* MapModelController.swift */,
 				DD8368D9253AEA0C00B38A6F /* MapRouter.swift */,
 				DD8368D3253AE52900B38A6F /* MapViewController.swift */,
@@ -351,8 +356,9 @@
 		DD9186B225361CB5002AA189 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DD9186B325361CB5002AA189 /* UITableView++.swift */,
 				DD8368E7253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift */,
+				DD9186B325361CB5002AA189 /* UITableView++.swift */,
+				DD836903253B2C7C00B38A6F /* UIImage+Rotated.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -482,6 +488,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD91867A2536116B002AA189 /* TableViewCell.swift in Sources */,
+				DD8368EB253AFE9900B38A6F /* MapCommon.swift in Sources */,
 				DD9186A025361A6F002AA189 /* ListingPlaceCell.swift in Sources */,
 				DD9186772536116B002AA189 /* TableViewCellTypeProvider.swift in Sources */,
 				DD9186782536116B002AA189 /* TableViewDirector.swift in Sources */,
@@ -508,6 +515,7 @@
 				DD91868D25361260002AA189 /* ListingService.swift in Sources */,
 				DD9186792536116B002AA189 /* TableViewEvents.swift in Sources */,
 				DD9186932536131E002AA189 /* AppConstants.swift in Sources */,
+				DD836904253B2C7C00B38A6F /* UIImage+Rotated.swift in Sources */,
 				DD9186A325361A76002AA189 /* ListingPlaceCellViewModel.swift in Sources */,
 				DD9186AF25361C76002AA189 /* AppFont.swift in Sources */,
 				DD8368D1253AE52200B38A6F /* MapAssembler.swift in Sources */,
