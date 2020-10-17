@@ -11,7 +11,7 @@ import SwinjectAutoregistration
 // MARK: - Assembler
 struct ListingAssembler {
     // MARK: Properties
-    private let assembler: Assembler
+    let assembler: Assembler
     
     // MARK: Private properties
     public var resolver: Resolver {
@@ -36,7 +36,7 @@ struct ListingAssembly: Assembly {
     func assemble(
         container: Container
     ) {
-        // Navigation controller
+        // MARK: Navigation controller
         container.register(
             ListingNavigationController.self
         ) { (
@@ -53,7 +53,7 @@ struct ListingAssembly: Assembly {
             return navigationController
         }
         
-        // View controller
+        // MARK: View controller
         container.register(
             ListingViewController.self
         ) { (
@@ -67,10 +67,14 @@ struct ListingAssembly: Assembly {
             let viewController = ListingViewController(
                 modelController: modelController
             )
+            viewController.router = resolver.resolve(
+                ListingRouter.self,
+                argument: viewController as UIViewController
+            )
             return viewController
         }
         
-        // Model controller
+        // MARK: Model controller
         container.register(
             ListingModelController.self
         ) { (
@@ -83,6 +87,30 @@ struct ListingAssembly: Assembly {
                 listingService: listingService
             )
             return modelController
+        }
+        
+        // MARK: Router
+        container.register(
+            ListingRouter.self
+        ) { (
+            resolver,
+            navigationContext: UIViewController
+        ) -> ListingRouter in
+            let mapAssembler = resolver ~> MapAssembler.self
+            return ListingRouter(
+                navigationContext: navigationContext,
+                mapAssembler: mapAssembler
+            )
+        }
+        
+        // MARK: Assemblers
+        container.register(
+            MapAssembler.self
+        ) {
+            let listingAssembler = $0 ~> ListingAssembler.self
+            return MapAssembler(
+                parent: listingAssembler.assembler
+            )
         }
     }
 }

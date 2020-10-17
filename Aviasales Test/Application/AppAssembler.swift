@@ -12,7 +12,7 @@ import SwinjectAutoregistration
 // MARK: - Assembler
 public struct AppAssembler {
     // MARK: Properties
-    private let assembler: Assembler
+    let assembler: Assembler
     
     // MARK: Private properties
     public var resolver: Resolver {
@@ -57,12 +57,24 @@ private struct AppAssembly: Assembly {
             ListingService.self
         ) { (_) in
             let provider = MoyaProvider<ListingAPI>(
-                callbackQueue: DispatchQueue.global(qos: .utility)
+                callbackQueue: DispatchQueue.global(
+                    qos: .utility
+                )
             )
             let service = ListingServiceImpl(
                 provider: provider
             )
             return service
+        }
+        
+        // MARK: Assemblers
+        container.register(
+            ListingAssembler.self
+        ) {
+            let appAssembler = $0 ~> AppAssembler.self
+            return ListingAssembler(
+                parent: appAssembler.assembler
+            )
         }
     }
 }

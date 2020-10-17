@@ -12,6 +12,9 @@ import Moya
 
 // MARK: - View controller
 final class ListingViewController: UIViewController {
+    // MARK: Properties
+    var router: ListingRouter!
+    
     // MARK: Private properties
     private let modelController: ListingModelController
     private let tableViewDirector: TableViewDirector
@@ -93,7 +96,14 @@ extension ListingViewController: ListingModelControllerDelegate {
         usingPlace place: Place
     ) {
         // TODO: Add me
-        // self.router.navigate(to: .map(...))
+        let initialLocation: Location? = nil
+        let finishLocation: Location = place.location
+        self.router.navigate(
+            to: .map(
+                initialLocation: initialLocation,
+                finishLocation: finishLocation
+            )
+        )
     }
 }
 

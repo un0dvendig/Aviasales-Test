@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		38BB70E8BAAE4ECF41322E45 /* Pods_Aviasales_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FC690FD4E274AD813782AF8 /* Pods_Aviasales_Test.framework */; };
+		DD8368CA253AE38D00B38A6F /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368C9253AE38D00B38A6F /* Router.swift */; };
+		DD8368CD253AE3A500B38A6F /* ListingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368CC253AE3A500B38A6F /* ListingRouter.swift */; };
+		DD8368D1253AE52200B38A6F /* MapAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368D0253AE52200B38A6F /* MapAssembler.swift */; };
+		DD8368D4253AE52900B38A6F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368D3253AE52900B38A6F /* MapViewController.swift */; };
+		DD8368D7253AE52F00B38A6F /* MapModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368D6253AE52F00B38A6F /* MapModelController.swift */; };
+		DD8368DA253AEA0C00B38A6F /* MapRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368D9253AEA0C00B38A6F /* MapRouter.swift */; };
 		DD91862B2535FA83002AA189 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD91862A2535FA83002AA189 /* AppDelegate.swift */; };
 		DD9186342535FA85002AA189 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD9186332535FA85002AA189 /* Assets.xcassets */; };
 		DD9186372535FA85002AA189 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD9186352535FA85002AA189 /* LaunchScreen.storyboard */; };
@@ -48,6 +54,12 @@
 /* Begin PBXFileReference section */
 		2FC690FD4E274AD813782AF8 /* Pods_Aviasales_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Aviasales_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CD259B7D79FB7336686EBAE /* Pods-Aviasales Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Aviasales Test.release.xcconfig"; path = "Target Support Files/Pods-Aviasales Test/Pods-Aviasales Test.release.xcconfig"; sourceTree = "<group>"; };
+		DD8368C9253AE38D00B38A6F /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		DD8368CC253AE3A500B38A6F /* ListingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingRouter.swift; sourceTree = "<group>"; };
+		DD8368D0253AE52200B38A6F /* MapAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAssembler.swift; sourceTree = "<group>"; };
+		DD8368D3253AE52900B38A6F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		DD8368D6253AE52F00B38A6F /* MapModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModelController.swift; sourceTree = "<group>"; };
+		DD8368D9253AEA0C00B38A6F /* MapRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRouter.swift; sourceTree = "<group>"; };
 		DD9186272535FA83002AA189 /* Aviasales Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aviasales Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD91862A2535FA83002AA189 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD9186332535FA85002AA189 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,6 +121,17 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		DD8368C7253AE2D700B38A6F /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				DD8368D0253AE52200B38A6F /* MapAssembler.swift */,
+				DD8368D6253AE52F00B38A6F /* MapModelController.swift */,
+				DD8368D9253AEA0C00B38A6F /* MapRouter.swift */,
+				DD8368D3253AE52900B38A6F /* MapViewController.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 		DD91861E2535FA83002AA189 = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +171,7 @@
 				DD9186922536131E002AA189 /* AppConstants.swift */,
 				DD91862A2535FA83002AA189 /* AppDelegate.swift */,
 				DD9186AE25361C76002AA189 /* AppFont.swift */,
+				DD8368C9253AE38D00B38A6F /* Router.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -167,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				DD91865725361060002AA189 /* Listing */,
+				DD8368C7253AE2D700B38A6F /* Map */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -197,8 +222,9 @@
 				DD9186602536111A002AA189 /* ListingCellHeightProvider.swift */,
 				DD91865F2536111A002AA189 /* ListingCellTypeProvider.swift */,
 				DD91865D2536111A002AA189 /* ListingModelController.swift */,
-				DD91865E2536111A002AA189 /* ListingViewController.swift */,
 				DD91865925361084002AA189 /* ListingNavigationController.swift */,
+				DD8368CC253AE3A500B38A6F /* ListingRouter.swift */,
+				DD91865E2536111A002AA189 /* ListingViewController.swift */,
 			);
 			path = Listing;
 			sourceTree = "<group>";
@@ -435,15 +461,19 @@
 				DD9186772536116B002AA189 /* TableViewCellTypeProvider.swift in Sources */,
 				DD9186782536116B002AA189 /* TableViewDirector.swift in Sources */,
 				DD91867B2536116B002AA189 /* FallbackCell.swift in Sources */,
+				DD8368D7253AE52F00B38A6F /* MapModelController.swift in Sources */,
+				DD8368CA253AE38D00B38A6F /* Router.swift in Sources */,
 				DD91865A25361084002AA189 /* ListingNavigationController.swift in Sources */,
 				DD9186662536111A002AA189 /* ListingAssembler.swift in Sources */,
 				DD918697253615FD002AA189 /* Location.swift in Sources */,
+				DD8368CD253AE3A500B38A6F /* ListingRouter.swift in Sources */,
 				DD91867F2536116B002AA189 /* TableViewCellViewModel.swift in Sources */,
 				DD91868E25361260002AA189 /* ListingServiceImpl.swift in Sources */,
 				DD918683253611B7002AA189 /* AppAssembler.swift in Sources */,
 				DD91867C2536116B002AA189 /* ScrollViewEvents.swift in Sources */,
 				DD9186622536111A002AA189 /* ListingModelController.swift in Sources */,
 				DD91868C25361260002AA189 /* VoidResult.swift in Sources */,
+				DD8368DA253AEA0C00B38A6F /* MapRouter.swift in Sources */,
 				DD91867D2536116B002AA189 /* TableViewCellHeightProvider.swift in Sources */,
 				DD9186802536116B002AA189 /* Cache.swift in Sources */,
 				DD9186642536111A002AA189 /* ListingCellTypeProvider.swift in Sources */,
@@ -454,12 +484,14 @@
 				DD9186932536131E002AA189 /* AppConstants.swift in Sources */,
 				DD9186A325361A76002AA189 /* ListingPlaceCellViewModel.swift in Sources */,
 				DD9186AF25361C76002AA189 /* AppFont.swift in Sources */,
+				DD8368D1253AE52200B38A6F /* MapAssembler.swift in Sources */,
 				DD9186652536111A002AA189 /* ListingCellHeightProvider.swift in Sources */,
 				DD91867E2536116B002AA189 /* TableViewUpdater.swift in Sources */,
 				DD91862B2535FA83002AA189 /* AppDelegate.swift in Sources */,
 				DD91869A25361687002AA189 /* Place.swift in Sources */,
 				DD9186632536111A002AA189 /* ListingViewController.swift in Sources */,
 				DD91868F25361260002AA189 /* ListingAPI.swift in Sources */,
+				DD8368D4253AE52900B38A6F /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
