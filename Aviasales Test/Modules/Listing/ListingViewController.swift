@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SHSearchBar
 import SVProgressHUD
 import TinyConstraints
 import Moya
@@ -16,17 +17,27 @@ final class ListingViewController: UIViewController {
     var router: ListingRouter!
     
     // MARK: Private properties
+    private enum Layout {
+        static let searchBarHeight: CGFloat = 50
+        static let searchBarVerticalPadding: CGFloat = 10
+        static let searchBarHorizontalPadding: CGFloat = 15
+        
+        static let tableViewVerticalOffset: CGFloat = 10
+    }
+    
     private let modelController: ListingModelController
     private let tableViewDirector: TableViewDirector
     
     // MARK: Subview
     private let tableView: UITableView
+    private let searchBar: SHSearchBar
     
     // MARK: Initialization
     init(
         modelController: ListingModelController
     ) {
         self.tableView = Self.makeTableView()
+        self.searchBar = Self.makeSearchBar()
         
         self.tableViewDirector = Self.makeTableViewDirector(
             forTableView: self.tableView
@@ -38,12 +49,12 @@ final class ListingViewController: UIViewController {
             bundle: nil
         )
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = AppColor.tableViewBackground.value
         self.setupSubviews()
         
         self.modelController.delegate = self
-        self.tableView.dataSource = self.tableViewDirector.adapter
-        self.tableView.delegate = self.tableViewDirector.adapter
+        self.searchBar.delegate = self
+        self.setupTableView()
     }
     
     @available(*, unavailable)
@@ -62,17 +73,73 @@ final class ListingViewController: UIViewController {
     }
     
     // MARK: Private methods
+    private func setupTableView() {
+        self.tableViewDirector.adapter.scrollEvents.willBeginDragging = { (_) in
+            self.handleKeyboard()
+        }
+        
+        self.tableView.dataSource = self.tableViewDirector.adapter
+        self.tableView.delegate = self.tableViewDirector.adapter
+        
+        let panGesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(self.handleKeyboard)
+        )
+        panGesture.delegate = self
+        self.tableView.addGestureRecognizer(
+            panGesture
+        )
+    }
+    
     private func setupSubviews() {
+        self.view.addSubview(
+            self.searchBar
+        )
+        self.searchBar.horizontalToSuperview(
+            insets: .horizontal(
+                Layout.searchBarHorizontalPadding
+            )
+        )
+        self.searchBar.topToSuperview(
+            offset: Layout.searchBarVerticalPadding,
+            usingSafeArea: true
+        )
+        self.searchBar.height(
+            Layout.searchBarHeight
+        )
+        
         self.view.addSubview(
             self.tableView
         )
+        self.tableView.topToBottom(
+            of: self.searchBar,
+            offset: Layout.tableViewVerticalOffset
+        )
+//        let totalOffsetForSearchBar = Layout.searchBarVerticalPadding
+//            + Layout.searchBarHeight
+//        self.tableView.topToSuperview(
+//            offset: totalOffsetForSearchBar,
+//            usingSafeArea: true
+//        )
         self.tableView.edgesToSuperview(
+            excluding: .top,
             usingSafeArea: false
         )
+        
+
+    }
+    
+    @objc
+    private func handleKeyboard() {
+        guard self.searchBar.isFirstResponder else {
+            return
+        }
+        self.searchBar.resignFirstResponder()
     }
 }
 
-// MARK: - ListingModelControllerDelegate
+// MARK: - Delegates
+// ListingModelControllerDelegate
 extension ListingViewController: ListingModelControllerDelegate {
     func pageLoading() {
         SVProgressHUD.show()
@@ -92,6 +159,35 @@ extension ListingViewController: ListingModelControllerDelegate {
         }
     }
     
+    func searchStarted() {
+        SVProgressHUD.show()
+    }
+    
+    func searchFinished(
+        with result: PageLoadingResult
+    ) {
+        SVProgressHUD.dismiss()
+        switch result {
+        case .success(let viewModels):
+            self.tableViewDirector.set(
+                viewModels: viewModels
+            )
+        case .failure(let error):
+            // Currently, since we do not use any server,
+            // this case is impossible.
+            print("Got and error! \(error)")
+        }
+    }
+    
+    func searchReturned(
+        toTheStateWith viewModels: [TableViewCellViewModel]
+    ) {
+        SVProgressHUD.dismiss()
+        self.tableViewDirector.set(
+            viewModels: viewModels
+        )
+    }
+    
     func openMap(
         usingPlace place: Place
     ) {
@@ -103,6 +199,64 @@ extension ListingViewController: ListingModelControllerDelegate {
                 finishPlace: finishPlace
             )
         )
+    }
+}
+
+// UISearchBarDelegate
+extension ListingViewController: SHSearchBarDelegate {
+    func searchBarShouldClear(
+        _ searchBar: SHSearchBar
+    ) -> Bool {
+        DispatchQueue.main.asyncDeduped(
+            target: self,
+            after: 0.5
+        ) {
+            self.modelController.searchPlaces(
+                matching: ""
+            )
+        }
+        return true
+    }
+    
+    func searchBar(
+        _ searchBar: SHSearchBar,
+        textDidChange text: String
+    ) {
+        DispatchQueue.main.asyncDeduped(
+            target: self,
+            after: 0.5
+        ) {
+            self.modelController.searchPlaces(
+                matching: text
+            )
+        }
+    }
+    
+    func searchBarShouldReturn(
+        _ searchBar: SHSearchBar
+    ) -> Bool {
+        guard let searchText = searchBar.text else {
+            return false
+        }
+        DispatchQueue.main.asyncDeduped(
+            target: self,
+            after: 0.5
+        ) {
+            self.modelController.searchPlaces(
+                matching: searchText
+            )
+        }
+        return true
+    }
+}
+
+// - UIGestureRecognizerDelegate
+extension ListingViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        return true
     }
 }
 
@@ -140,5 +294,45 @@ extension ListingViewController {
             updater: updater
         )
         return tableViewDirector
+    }
+    
+    private static func makeSearchBar() -> SHSearchBar {
+        var config = SHSearchBarConfig()
+        config.useCancelButton = true
+        let textAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: AppColor.text.value,
+            .font: AppFont.medium15
+        ]
+        config.textAttributes = textAttributes
+        
+        let searchBar = SHSearchBar(
+            config: config
+        )
+        
+        searchBar.textField.autocapitalizationType = .sentences
+        searchBar.textField.autocorrectionType = .no
+        
+        let placeholderText = NSLocalizedString(
+            "Listing.SearchBar.Placeholder.Text",
+            comment: ""
+        )
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: AppColor.placeholder.value,
+            .font: AppFont.medium15
+        ]
+        let attributedPlaceholder = NSAttributedString(
+            string: placeholderText,
+            attributes: placeholderAttributes
+        )
+        searchBar.textField.attributedPlaceholder = attributedPlaceholder
+        
+        searchBar.updateBackgroundImage(
+            withRadius: 10,
+            corners: [
+                .allCorners
+            ],
+            color: AppColor.searchBarBackground.value
+        )
+        return searchBar
     }
 }

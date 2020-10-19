@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		38BB70E8BAAE4ECF41322E45 /* Pods_Aviasales_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FC690FD4E274AD813782AF8 /* Pods_Aviasales_Test.framework */; };
+		DD13B929253E00CB0015DBEC /* NoResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD13B928253E00CB0015DBEC /* NoResultCell.swift */; };
+		DD13B92C253E00D60015DBEC /* NoResultCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD13B92B253E00D60015DBEC /* NoResultCellViewModel.swift */; };
+		DD13B93B253E11F60015DBEC /* DispatchQueue+Dedupe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD13B93A253E11F60015DBEC /* DispatchQueue+Dedupe.swift */; };
+		DD13B941253E1D0B0015DBEC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD13B943253E1D0B0015DBEC /* Localizable.strings */; };
 		DD8368CA253AE38D00B38A6F /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368C9253AE38D00B38A6F /* Router.swift */; };
 		DD8368CD253AE3A500B38A6F /* ListingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368CC253AE3A500B38A6F /* ListingRouter.swift */; };
 		DD8368D1253AE52200B38A6F /* MapAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8368D0253AE52200B38A6F /* MapAssembler.swift */; };
@@ -60,6 +64,11 @@
 /* Begin PBXFileReference section */
 		2FC690FD4E274AD813782AF8 /* Pods_Aviasales_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Aviasales_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CD259B7D79FB7336686EBAE /* Pods-Aviasales Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Aviasales Test.release.xcconfig"; path = "Target Support Files/Pods-Aviasales Test/Pods-Aviasales Test.release.xcconfig"; sourceTree = "<group>"; };
+		DD13B928253E00CB0015DBEC /* NoResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultCell.swift; sourceTree = "<group>"; };
+		DD13B92B253E00D60015DBEC /* NoResultCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultCellViewModel.swift; sourceTree = "<group>"; };
+		DD13B93A253E11F60015DBEC /* DispatchQueue+Dedupe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Dedupe.swift"; sourceTree = "<group>"; };
+		DD13B942253E1D0B0015DBEC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DD13B945253E1D1C0015DBEC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DD8368C9253AE38D00B38A6F /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		DD8368CC253AE3A500B38A6F /* ListingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingRouter.swift; sourceTree = "<group>"; };
 		DD8368D0253AE52200B38A6F /* MapAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAssembler.swift; sourceTree = "<group>"; };
@@ -133,6 +142,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		DD13B927253E00B90015DBEC /* No Result Cell */ = {
+			isa = PBXGroup;
+			children = (
+				DD13B928253E00CB0015DBEC /* NoResultCell.swift */,
+				DD13B92B253E00D60015DBEC /* NoResultCellViewModel.swift */,
+			);
+			path = "No Result Cell";
+			sourceTree = "<group>";
+		};
 		DD8368C7253AE2D700B38A6F /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,11 +217,11 @@
 			isa = PBXGroup;
 			children = (
 				DD918682253611B7002AA189 /* AppAssembler.swift */,
+				DD836908253B38E400B38A6F /* AppColor.swift */,
 				DD9186922536131E002AA189 /* AppConstants.swift */,
 				DD91862A2535FA83002AA189 /* AppDelegate.swift */,
 				DD9186AE25361C76002AA189 /* AppFont.swift */,
 				DD8368C9253AE38D00B38A6F /* Router.swift */,
-				DD836908253B38E400B38A6F /* AppColor.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -233,6 +251,7 @@
 			children = (
 				DD9186A625361C5F002AA189 /* Fonts */,
 				DD9186332535FA85002AA189 /* Assets.xcassets */,
+				DD13B943253E1D0B0015DBEC /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -332,6 +351,7 @@
 		DD91869E25361A64002AA189 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				DD13B927253E00B90015DBEC /* No Result Cell */,
 				DD9186A525361A9E002AA189 /* Place Cell */,
 			);
 			path = Cells;
@@ -360,8 +380,9 @@
 			isa = PBXGroup;
 			children = (
 				DD8368E7253AFA7800B38A6F /* CLLocationCoordinate2D+Location.swift */,
-				DD9186B325361CB5002AA189 /* UITableView++.swift */,
+				DD13B93A253E11F60015DBEC /* DispatchQueue+Dedupe.swift */,
 				DD836903253B2C7C00B38A6F /* UIImage+Rotated.swift */,
+				DD9186B325361CB5002AA189 /* UITableView++.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -417,6 +438,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = DD91861E2535FA83002AA189;
 			productRefGroup = DD9186282535FA83002AA189 /* Products */;
@@ -434,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD9186372535FA85002AA189 /* LaunchScreen.storyboard in Resources */,
+				DD13B941253E1D0B0015DBEC /* Localizable.strings in Resources */,
 				DD9186342535FA85002AA189 /* Assets.xcassets in Resources */,
 				DD9186AC25361C5F002AA189 /* SFProDisplay-Bold.ttf in Resources */,
 				DD9186AA25361C5F002AA189 /* SFProDisplay-Medium.ttf in Resources */,
@@ -495,9 +518,11 @@
 				DD9186A025361A6F002AA189 /* ListingPlaceCell.swift in Sources */,
 				DD9186772536116B002AA189 /* TableViewCellTypeProvider.swift in Sources */,
 				DD9186782536116B002AA189 /* TableViewDirector.swift in Sources */,
+				DD13B929253E00CB0015DBEC /* NoResultCell.swift in Sources */,
 				DD91867B2536116B002AA189 /* FallbackCell.swift in Sources */,
 				DD8368D7253AE52F00B38A6F /* MapModelController.swift in Sources */,
 				DD8368CA253AE38D00B38A6F /* Router.swift in Sources */,
+				DD13B93B253E11F60015DBEC /* DispatchQueue+Dedupe.swift in Sources */,
 				DD91865A25361084002AA189 /* ListingNavigationController.swift in Sources */,
 				DD9186662536111A002AA189 /* ListingAssembler.swift in Sources */,
 				DD918697253615FD002AA189 /* Location.swift in Sources */,
@@ -527,6 +552,7 @@
 				DD8368E3253AF31000B38A6F /* IATAAnnotationView.swift in Sources */,
 				DD91867E2536116B002AA189 /* TableViewUpdater.swift in Sources */,
 				DD91862B2535FA83002AA189 /* AppDelegate.swift in Sources */,
+				DD13B92C253E00D60015DBEC /* NoResultCellViewModel.swift in Sources */,
 				DD91869A25361687002AA189 /* Place.swift in Sources */,
 				DD9186632536111A002AA189 /* ListingViewController.swift in Sources */,
 				DD91868F25361260002AA189 /* ListingAPI.swift in Sources */,
@@ -538,6 +564,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		DD13B943253E1D0B0015DBEC /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DD13B942253E1D0B0015DBEC /* en */,
+				DD13B945253E1D1C0015DBEC /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		DD9186352535FA85002AA189 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -553,6 +588,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -614,6 +650,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

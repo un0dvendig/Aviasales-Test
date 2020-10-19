@@ -13,6 +13,7 @@ target 'Aviasales Test' do
   pod 'TinyConstraints'
   pod 'Moya', '~> 14.0'
   pod 'SwiftRichString'
+  pod 'SHSearchBar'
   pod 'SVProgressHUD' 
   pod 'Swinject'
   pod 'SwinjectAutoregistration', '~> 2.7.0'

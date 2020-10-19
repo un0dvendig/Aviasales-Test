@@ -10,6 +10,7 @@ final class ListingCellTypeProvider: TableViewCellTypeProvider {
     // MARK: Properites
     let allCellTypes: [TableViewCell.Type] = [
         ListingPlaceCell.self,
+        NoResultCell.self,
         // Add new cells here
 
         FallbackCell.self
@@ -25,6 +26,8 @@ final class ListingCellTypeProvider: TableViewCellTypeProvider {
         switch viewModel {
         case is ListingPlaceCell.ViewModel:
             cellType = ListingPlaceCell.self
+        case is NoResultCell.ViewModel:
+            cellType = NoResultCell.self
         default:
             assertionFailure(
                 "Unknown viewModel type."

@@ -22,6 +22,27 @@ protocol ListingModelControllerDelegate: AnyObject {
         with result: PageLoadingResult
     )
     
+    /// Handles start of the searching process.
+    func searchStarted()
+    
+    /// Handles result of the searching query.
+    ///
+    /// - Parameters:
+    ///    - result: The result of searching query.
+    func searchFinished(
+        with result: PageLoadingResult
+    )
+    
+    /// Handles the event of clearing the search bar.
+    /// (i.e. the event of returning the collection view's state to the initial one)
+    ///
+    /// - Parameters:
+    ///    - models: View models from the initial state of the search page,
+    ///    those, that the result of the page loading process contained.
+    func searchReturned(
+        toTheStateWith viewModels: [TableViewCellViewModel]
+    )
+    
     /// Handles opening map with given place.
     ///
     /// - Parameters:
@@ -81,6 +102,56 @@ final class ListingModelController {
         }
     }
     
+    /// Search places matching given text.
+    ///
+    /// - Parameters:
+    ///    - query: The text that should be included in the search query.
+    func searchPlaces(
+        matching query: String
+    ) {
+        DispatchQueue.main.async {
+            self.delegate?.searchStarted()
+        }
+        
+        guard !query.isEmpty else {
+            let items = self.places.map {
+                self.makeListingCellViewModel(
+                    usingPlace: $0
+                )
+            }
+            DispatchQueue.main.async {
+                self.delegate?.searchReturned(
+                    toTheStateWith: items
+                )
+            }
+            return
+        }
+        
+        var filteredPlacesViewModels: [TableViewCellViewModel] = []
+        filteredPlacesViewModels = self.places.filter {
+            $0.name.lowercased().contains(
+                query.lowercased()
+            )
+        }.map {
+            self.makeListingCellViewModel(
+                usingPlace: $0
+            )
+        }
+        if filteredPlacesViewModels.isEmpty {
+            let noResultViewModel = self.makeNoMatchViewModel(
+                forSearchQuery: query
+            )
+            filteredPlacesViewModels.append(
+                noResultViewModel
+            )
+        }
+        DispatchQueue.main.async {
+            self.delegate?.searchFinished(
+                with: .success(filteredPlacesViewModels)
+            )
+        }
+    }
+    
     // MARK: Private methods
     private func updateListing(
         then handler: @escaping (VoidResult) -> Void
@@ -105,7 +176,7 @@ final class ListingModelController {
 extension ListingModelController {
     private func makeListingCellViewModel(
         usingPlace place: Place
-    ) -> ListingPlaceCell.ViewModel {
+    ) -> TableViewCellViewModel {
         let name = place.name
         
         let airportName: String
@@ -138,5 +209,28 @@ extension ListingModelController {
         )
         
         return listingPlaceCellViewModel
+    }
+    
+    private func makeNoMatchViewModel(
+        forSearchQuery query: String
+    ) -> TableViewCellViewModel {
+        let title = NSLocalizedString(
+            "Listing.NoResultCell.Title.Text",
+            comment: ""
+        )
+        let subtitleTextFormat = NSLocalizedString(
+            "Listing.NoResultCell.Subtitle.Text",
+            comment: ""
+        )
+        let subtitle = String(
+            format: subtitleTextFormat,
+            query
+        )
+        
+        let viewModel = NoResultCell.ViewModel(
+            title: title,
+            subtitle: subtitle
+        )
+        return viewModel
     }
 }

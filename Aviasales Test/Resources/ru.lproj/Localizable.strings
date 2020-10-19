@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  Aviasales Test
+
+  Created by Eugene Ilyin on 19.10.2020.
+  
+*/
+
+// Listing
+"Listing.NoResultCell.Title.Text" = "Нет результатов 😨";
+"Listing.NoResultCell.Subtitle.Text" = "Для запроса \"%@\"";
+"Listing.SearchBar.Placeholder.Text" = "Поиск места...";

@@ -11,8 +11,10 @@ import UIKit.UIColor
 enum AppColor {
     case background
     case tableViewBackground
+    case searchBarBackground
     
     case text
+    case placeholder
     case titleText
     
     case annotationBorder
@@ -38,9 +40,13 @@ extension AppColor {
             instanceColor = .white
         case .tableViewBackground:
             instanceColor = .lightGray
+        case .searchBarBackground:
+            instanceColor = .white
             
         case .text:
             instanceColor = .black
+        case .placeholder:
+            instanceColor = .blue
         case .titleText:
             instanceColor = .purple
             

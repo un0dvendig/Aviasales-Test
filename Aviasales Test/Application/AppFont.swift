@@ -10,6 +10,7 @@ import UIKit
 enum AppFont {
     // MARK: - Bold
     static let bold20: UIFont = bold(size: 20)
+    static let bold17: UIFont = bold(size: 17)
 
     // MARK: - Medium
     static let medium20: UIFont = medium(size: 20)
