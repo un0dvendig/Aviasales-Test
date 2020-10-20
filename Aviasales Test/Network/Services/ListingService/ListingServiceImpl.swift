@@ -16,6 +16,7 @@ public class ListingServiceImpl{
     
     // MARK: Private properties
     private let provider: MoyaProvider<ListingAPI>
+    private var currentRequest: Cancellable?
     
     // MARK: Initialization
     init(
@@ -31,7 +32,12 @@ extension ListingServiceImpl: ListingService {
         usingKeyword keyword: String,
         then handler: @escaping (Result<[Place], MoyaError>) -> Void
     ) {
-        self.provider.request(
+        if self.currentRequest != nil {
+            self.currentRequest?.cancel()
+            self.currentRequest = nil
+        }
+        
+        let request = self.provider.request(
             .places(
                 keyword: keyword
             )
@@ -53,6 +59,9 @@ extension ListingServiceImpl: ListingService {
             case .failure(let error):
                 handler(.failure(error))
             }
+            self.currentRequest = nil
         }
+        
+        self.currentRequest = request
     }
 }

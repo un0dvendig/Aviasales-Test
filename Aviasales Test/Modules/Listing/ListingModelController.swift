@@ -62,6 +62,7 @@ final class ListingModelController {
     private let listingService: ListingService
     
     // Data source
+    private var initialPlaces: [Place] = [] // Initial data, to which user returns, when "Cancel" is tapped.
     private var places: [Place] = []
     
     // MARK: Initialization
@@ -79,17 +80,21 @@ final class ListingModelController {
             self.delegate?.pageLoading()
         }
         
-        self.updateListing { (result) in
+        let keyword = self.placeKeyword
+        self.updateListing(
+            isInitialUpdate: true,
+            usingKeyword: keyword
+        ) { (result) in
             switch result {
             case .success:
                 DispatchQueue.main.async {
-                    let items = self.places.map {
+                    let initialItems = self.initialPlaces.map {
                         self.makeListingCellViewModel(
                             usingPlace: $0
                         )
                     }
                     self.delegate?.mainPageLoaded(
-                        with: .success(items)
+                        with: .success(initialItems)
                     )
                 }
             case .failure(let error):
@@ -114,56 +119,61 @@ final class ListingModelController {
         }
         
         guard !query.isEmpty else {
-            let items = self.places.map {
+            let initialItems = self.initialPlaces.map {
                 self.makeListingCellViewModel(
                     usingPlace: $0
                 )
             }
             DispatchQueue.main.async {
                 self.delegate?.searchReturned(
-                    toTheStateWith: items
+                    toTheStateWith: initialItems
                 )
             }
             return
         }
         
-        var filteredPlacesViewModels: [TableViewCellViewModel] = []
-        filteredPlacesViewModels = self.places.filter {
-            $0.name.lowercased().contains(
-                query.lowercased()
-            )
-        }.map {
-            self.makeListingCellViewModel(
-                usingPlace: $0
-            )
-        }
-        if filteredPlacesViewModels.isEmpty {
-            let noResultViewModel = self.makeNoMatchViewModel(
-                forSearchQuery: query
-            )
-            filteredPlacesViewModels.append(
-                noResultViewModel
-            )
-        }
-        DispatchQueue.main.async {
-            self.delegate?.searchFinished(
-                with: .success(filteredPlacesViewModels)
-            )
+        self.updateListing(
+            isInitialUpdate: false,
+            usingKeyword: query
+        ) { (result) in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    let items = self.places.map {
+                        self.makeListingCellViewModel(
+                            usingPlace: $0
+                        )
+                    }
+                    self.delegate?.searchFinished(
+                        with: .success(items)
+                    )
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.delegate?.searchFinished(
+                        with: .failure(error)
+                    )
+                }
+            }
         }
     }
     
     // MARK: Private methods
     private func updateListing(
+        isInitialUpdate: Bool = false,
+        usingKeyword keyword: String,
         then handler: @escaping (VoidResult) -> Void
     ) {
-        let keyword = self.placeKeyword
-        
         self.listingService.getPlaces(
             usingKeyword: keyword
         ) { (result) in
             switch result {
             case .success(let places):
-                self.places = places
+                if isInitialUpdate {
+                    self.initialPlaces = places
+                } else {
+                    self.places = places
+                }
                 handler(.success)
             case .failure(let error):
                 handler(.failure(error))

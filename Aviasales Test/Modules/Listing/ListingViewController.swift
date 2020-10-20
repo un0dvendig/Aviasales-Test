@@ -173,8 +173,6 @@ extension ListingViewController: ListingModelControllerDelegate {
                 viewModels: viewModels
             )
         case .failure(let error):
-            // Currently, since we do not use any server,
-            // this case is impossible.
             print("Got and error! \(error)")
         }
     }
@@ -209,7 +207,7 @@ extension ListingViewController: SHSearchBarDelegate {
     ) -> Bool {
         DispatchQueue.main.asyncDeduped(
             target: self,
-            after: 0.5
+            after: 0.75
         ) {
             self.modelController.searchPlaces(
                 matching: ""
@@ -224,7 +222,7 @@ extension ListingViewController: SHSearchBarDelegate {
     ) {
         DispatchQueue.main.asyncDeduped(
             target: self,
-            after: 0.5
+            after: 0.75
         ) {
             self.modelController.searchPlaces(
                 matching: text
@@ -240,7 +238,7 @@ extension ListingViewController: SHSearchBarDelegate {
         }
         DispatchQueue.main.asyncDeduped(
             target: self,
-            after: 0.5
+            after: 0.75
         ) {
             self.modelController.searchPlaces(
                 matching: searchText
