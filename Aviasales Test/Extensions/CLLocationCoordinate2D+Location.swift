@@ -14,7 +14,7 @@ extension CLLocationCoordinate2D {
     ) {
         self = .init(
             latitude: location.latitude,
-            longitude: location.latitude
+            longitude: location.longitude
         )
     }
 }
