@@ -18,6 +18,7 @@ Test task for AviaSales
 
 ## TODO:
 
+- [X] Add assets to another branch
 - [ ] Fix lite preudo 'retain cycle' (second screen stays in the memory until the airplane reaches the finish point)
 - [ ] Switch from #selector to timer with CADisplayLink
 - [ ] Clear the design
