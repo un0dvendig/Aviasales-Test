@@ -42,8 +42,8 @@ final class MapModelController {
             self.initialPlace = initialPlace
         } else {
             let saintPetersburgLocation: Location = .init(
-                longitude: 59.8029,
-                latitude: 30.2678
+                longitude: 30.2678,
+                latitude: 59.8029
             )
             let saintPetersburgPlace: Place = .init(
                 name: "Saint-Petersburg",
